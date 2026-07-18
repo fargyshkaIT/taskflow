@@ -1,0 +1,141 @@
+/* ==========================================================================
+   1. ОБЩИЕ СТИЛИ ДЛЯ ВСЕГО САЙТА (СБРОС И ШРИФТЫ)
+   ========================================================================== */
+* {
+    box-sizing: border-box; /* Чтобы паддинги не раздували размеры элементов */
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Приятный современный шрифт */
+}
+
+body {
+    background-color: #f4f7f6; /* Мягкий светлый фон, чтобы глаза не уставали */
+    color: #333333; /* Темно-серый цвет текста вместо чисто черного */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Растягиваем контент на всю высоту экрана */
+    padding: 20px;
+}
+
+/* ==========================================================================
+   2. КОНТЕЙНЕРЫ ДЛЯ СТРАНИЦ (КАРТОЧКИ ФОРМЫ И ДАШБОРДА)
+   ========================================================================== */
+.container {
+    background: #ffffff; /* Белая карточка поверх серого фона */
+    padding: 30px;
+    border-radius: 8px; /* Красивые скругленные углы */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Мягкая тень для эффекта объема */
+    width: 100%;
+    max-width: 450px; /* Ограничиваем ширину формы входа */
+}
+
+/* Расширенная карточка для личного кабинета, так как там больше данных */
+.container-dashboard {
+    max-width: 700px;
+}
+
+h2, h3 {
+    margin-bottom: 20px;
+    color: #2c3e50; /* Красивый глубокий сине-серый цвет для заголовков */
+}
+
+/* ==========================================================================
+   3. СТИЛИЗАЦИЯ ФОРМ И ПОЛЕЙ ВВОДА (INPUT)
+   ========================================================================== */
+.form-group {
+    margin-bottom: 15px; /* Отступы между блоками ввода */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 15px;
+    transition: border-color 0.2s; /* Плавное мигание рамки при фокусе */
+}
+
+/* Эффект, когда пользователь кликает внутрь поля ввода */
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #3498db; /* Синяя рамка */
+    outline: none; /* Убираем стандартную обводку браузера */
+}
+
+/* ИНЛАЙН-ФОРМА для добавления задач (инпут и кнопка в одну строку) */
+.task-form {
+    display: flex;
+    gap: 10px; /* Расстояние между инпутом и кнопкой */
+    margin-bottom: 25px;
+}
+
+/* ==========================================================================
+   4. СТИЛИЗАЦИЯ КНОПОК И ССЫЛОК
+   ========================================================================== */
+button {
+    background-color: #3498db; /* Красивый синий цвет */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #2980b9; /* Темнеет при наведении */
+}
+
+a {
+    color: #e74c3c; /* Красный цвет для ссылки "Выход" */
+    text-decoration: none; /* Убираем подчеркивание */
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   5. КАРТОЧКИ ЗАДАЧ (СПИСОК НА ДАШБОРДЕ)
+   ========================================================================== */
+.task-list {
+    margin-top: 15px;
+}
+
+.task-item {
+    background-color: #fafbfc;
+    border-left: 4px solid #3498db; /* Синяя полоска слева подчеркивает статус */
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between; /* Название слева, статус справа */
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.task-title {
+    font-weight: 500;
+}
+
+.badge {
+    background-color: #e8f4fd;
+    color: #3498db;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase; /* Все буквы заглавные */
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель задач TaskFlow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- container-dashboard шире обычной карточки, чтобы список задач смотрелся просторно -->
+    <div class="container container-dashboard">
+
+        <!-- Шапка личного кабинета с выводом имени пользователя из сессии бэкенда -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h2>Панель задач</h2>
+            <p>Логин: <b>{{ session['username'] }}</b> | <a href="/logout">Выйти</a></p>
+        </div>
+
+        <h3>Новая задача</h3>
+        <!-- Форма добавления задачи в один ряд (класс task-form) -->
+        <form action="/add_task" method="POST" class="task-form">
+            <input type="text" name="task_title" placeholder="Что нужно сделать сегодня?" required style="flex: 1;">
+            <button type="submit">Добавить</button>
+        </form>
+
+        <h3>Ваш список задач</h3>
+        <div class="task-list">
+            <!-- Начало цикла Jinja2. Перебираем массив 'tasks', присланный из Python функции dashboard() -->
+            {% for task in tasks %}
+                <div class="task-item">
+                    <div>
+                        <!-- task[1] — это поле title (название задачи) из SQL-выборки -->
+                        <span class="task-title">{{ task[1] }}</span>
+                        <!-- task[2] — это поле status (текущий статус задачи) -->
+                        <span class="badge">{{ task[2] }}</span>
+                    </div>
+
+                    <!-- Кнопка удаления задачи. Передает в URL динамический ID задачи: task[0] -->
+                    <form action="/delete_task/{{ task[0] }}" method="POST" style="margin: 0;">
+                        <button type="submit" style="background-color: #e74c3c; padding: 5px 10px; font-size: 12px; border-radius: 4px;">✕</button>
+                    </form>
+                </div>
+            {% else %}
+                <!-- Этот блок сработает автоматически, если список задач у пользователя пуст -->
+                <p style="color: #888; font-style: italic;">У вас пока нет задач. Добавьте первую!</p>
+            {% endfor %}
+            <!-- Обязательно закрываем цикл Jinja2, иначе шаблонизатор сломает страницу -->
+        </div>
+
+    </div>
+
+</body>
+</html>

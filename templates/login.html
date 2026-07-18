@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход в TaskFlow</title>
+    <!-- Подключаем стили из статической папки с помощью встроенной во Flask функции url_for -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- Класс container превращает разметку в аккуратную белую карточку по центру экрана -->
+    <div class="container">
+        <h2>Войти в TaskFlow</h2>
+
+        <!-- Форма отправляет пакет данных методом POST на обработчик бэкенда /login -->
+        <form action="/login" method="POST">
+
+            <!-- БЛОК ВЫВОДА ОШИБОК АВТОРИЗАЦИИ (ВСПЛЫВАЕТ ПРИ НЕВЕРНОМ ПАРОЛЕ) -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 20px; border-radius: 4px; font-size: 14px; font-weight: 500;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="form-group">
+                <label for="username">Имя пользователя:</label>
+                <!-- name="username" указывает Python бэкенду, под каким ключом искать строку ввода -->
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" style="width: 100%;">Войти</button>
+
+            <p style="margin-top: 15px; font-size: 14px; text-align: center;">
+                Нет аккаунта? <a href="/register" style="color: #3498db;">Зарегистрироваться</a>
+            </p>
+        </form>
+    </div>
+
+</body>
+</html>
