@@ -3,48 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Панель задач TaskFlow</title>
+    <!-- Подключаем файл стилей через встроенную функцию url_for из папки static -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-    <!-- container-dashboard шире обычной карточки, чтобы список задач смотрелся просторно -->
+    <!-- Главный блок-контейнер со стилями белой карточки по центру экрана -->
     <div class="container container-dashboard">
 
-        <!-- Шапка личного кабинета с выводом имени пользователя из сессии бэкенда -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-            <h2>Панель задач</h2>
-            <p>Логин: <b>{{ session['username'] }}</b> | <a href="/logout">Выйти</a></p>
+        <div style="margin-bottom: 30px;">
+            <h2>Панель задач TaskFlow</h2>
+            <p style="color: #666; font-size: 14px;">Режим демонстрации проекта (ЙОТК ИСиП)</p>
         </div>
 
         <h3>Новая задача</h3>
-        <!-- Форма добавления задачи в один ряд (класс task-form) -->
+        <!-- Форма отправляет данные методом POST на обработчик бэкенда /add_task -->
         <form action="/add_task" method="POST" class="task-form">
+            <!-- Атрибут name="task_title" критически важен, по нему Flask найдет этот текст в Python -->
             <input type="text" name="task_title" placeholder="Что нужно сделать сегодня?" required style="flex: 1;">
             <button type="submit">Добавить</button>
         </form>
 
         <h3>Ваш список задач</h3>
         <div class="task-list">
-            <!-- Начало цикла Jinja2. Перебираем массив 'tasks', присланный из Python функции dashboard() -->
+            <!-- Начало цикла Jinja2. Перебираем список задач 'tasks', пришедший из Python бэкенда -->
             {% for task in tasks %}
                 <div class="task-item">
                     <div>
-                        <!-- task[1] — это поле title (название задачи) из SQL-выборки -->
+                        <!-- task — это поле title (название задачи) из SQL-выборки -->
                         <span class="task-title">{{ task[1] }}</span>
-                        <!-- task[2] — это поле status (текущий статус задачи) -->
+                        <!-- task — это поле status (текущий статус задачи) -->
                         <span class="badge">{{ task[2] }}</span>
                     </div>
 
-                    <!-- Кнопка удаления задачи. Передает в URL динамический ID задачи: task[0] -->
+                    <!-- Кнопка удаления задачи. Передает в URL уникальный id задачи из базы: task -->
                     <form action="/delete_task/{{ task[0] }}" method="POST" style="margin: 0;">
                         <button type="submit" style="background-color: #e74c3c; padding: 5px 10px; font-size: 12px; border-radius: 4px;">✕</button>
                     </form>
                 </div>
             {% else %}
-                <!-- Этот блок сработает автоматически, если список задач у пользователя пуст -->
+                <!-- Этот блок сработает сам, если список задач пуст (у админа еще нет тасков) -->
                 <p style="color: #888; font-style: italic;">У вас пока нет задач. Добавьте первую!</p>
             {% endfor %}
-            <!-- Обязательно закрываем цикл Jinja2, иначе шаблонизатор сломает страницу -->
+            <!-- Обязательно закрываем цикл шаблонизатора, иначе страница выдаст ошибку -->
         </div>
 
     </div>
